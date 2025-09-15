@@ -31,15 +31,21 @@ Con Minikube puedes practicar, probar apps y aprender Kubernetes sin necesidad d
 
 > Es necesario tener la virtualizacion activada
 
+[Minikube Installation](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download)
+
 ## Installation
 
 **Kubectl**
 
-Es recomendable instalar Kubectl primero.
+[Pasos para instalar](https://k8s-docs.netlify.app/en/docs/tasks/tools/install-kubectl/#install-kubectl-on-windows)
 
-kubectl es la herramienta de línea de comandos para interactuar con Kubernetes.
+> Es recomendable instalar Kubectl primero.
 
-Te permite decirle a Kubernetes qué hacer: crear aplicaciones, ver el estado de los Pods, escalar servicios, actualizar configuraciones, etc.
+```ps
+winget install Kubernetes.kubectl
+```
+
+kubectl es la herramienta de línea de comandos para interactuar con Kubernetes. Te permite decirle a Kubernetes qué hacer: crear aplicaciones, ver el estado de los Pods, escalar servicios, actualizar configuraciones, etc.
 
 Es como el control remoto de tu cluster de Kubernetes.
 
@@ -55,3 +61,44 @@ Las aplicaciones se empaquetan en charts, que incluyen todos los Pods, servicios
 winget install Helm.Helm
 ```
 
+
+# Firs steps
+
+## Iniciar Cluster
+
+Un cluster de Minikube es básicamente una versión pequeña de un cluster de Kubernetes que corre localmente en tu computadora.
+
+Cluster en Kubernetes = conjunto de máquinas (nodos) que ejecutan aplicaciones en contenedores y están coordinadas entre sí.
+
+Minikube simula ese cluster en una sola máquina (tu PC), para que puedas probar y aprender Kubernetes sin necesidad de muchos servidores.
+
+
+```ps
+minikube start
+```
+
+Si verificamos los contenedores de docker se podrá visualizar que hay un contenedor para minikube
+
+```ps
+docker ps -a
+```
+
+## Estado del Cluster
+
+```ps
+minikube status
+```
+
+## Detener el Cluster
+
+```ps
+minikube stop
+```
+
+## Ejecutar Dashboard
+
+Esta funcion permite ver de manera grafica el Cluster
+
+```ps
+minikube dashboard --url
+```
