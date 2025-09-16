@@ -1,0 +1,37 @@
+# sip-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sip-server
+  namespace: livekit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sip
+  template:
+    metadata:
+      labels:
+        app: sip
+    spec:
+      hostNetwork: true  # Para UDP/RTP
+      containers:
+      - name: sip
+        image: livekit/sip:latest
+        args: ["--config", "/etc/sip/config.yaml"]
+        volumeMounts:
+        - name: config
+          mountPath: /etc/sip
+        ports:
+        - containerPort: 5060
+          protocol: UDP
+        - containerPort: 5060
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+      volumes:
+      - name: config
+        configMap:
+          name: sip-config

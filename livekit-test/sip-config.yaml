@@ -1,0 +1,23 @@
+# sip-config.yaml
+api_key: devkey  # Cambia a client1key para aislamiento
+api_secret: secret
+ws_url: ws://livekit-server:7880
+redis:
+  address: livekit-redis-master:6379
+sip_port: 5060
+rtp_port: 10000-20000
+use_external_ip: true
+logging:
+  level: info
+# Trunks custom por cliente
+trunks:
+  - id: client1-trunk
+    numbers: ["+1234567890"]  # Números para cliente 1
+    auth_username: client1-user
+    auth_password: client1-pass
+    outbound_address: sip.provider.com:5060  # Tu proveedor SIP
+  - id: client2-trunk
+    numbers: ["+1987654321"]  # Para cliente 2
+    auth_username: client2-user
+    auth_password: client2-pass
+    outbound_address: sip.another.com:5060

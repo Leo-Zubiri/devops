@@ -1,0 +1,49 @@
+# values-server.yaml (basado en server-sample.yaml)
+replicaCount: 1  # Escala via HPA
+
+# Config LiveKit
+rtc:
+  port_range_start: 50000
+  port_range_end: 60000
+  tcp_port: 7881
+  use_external_ip: true
+
+redis:
+  address: livekit-redis-master:6379
+
+keys:
+  devkey: secret
+  client1key: client1secret
+  client2key: client2secret
+
+turn:
+  enabled: true
+  domain: turn.localhost  # En prod: turn.tudominio.com
+  tls_port: 5349
+  cert_file: /etc/livekit/turn.crt  # Monta secret en prod
+  key_file: /etc/livekit/turn.key
+
+node_selector:
+  kind: regionaware
+  sysload_limit: 0.7  # Escala si >70% load
+
+# Ingress para HTTPS (usa NGINX addon)
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: livekit.localhost
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: livekit-tls
+      hosts:
+        - livekit.localhost
+
+# HPA para escalabilidad
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
